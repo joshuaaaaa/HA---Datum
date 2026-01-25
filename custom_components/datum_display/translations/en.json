@@ -116,6 +116,15 @@
       },
       "workdays_left": {
         "name": "Workdays Left"
+      },
+      "holiday_de": {
+        "name": "German Holiday"
+      },
+      "holiday_sk": {
+        "name": "Slovak Holiday"
+      },
+      "name_day_sk": {
+        "name": "Slovak Name Day"
       }
     }
   }

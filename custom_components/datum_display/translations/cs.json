@@ -116,6 +116,15 @@
       },
       "workdays_left": {
         "name": "Zbývá pracovních dnů"
+      },
+      "holiday_de": {
+        "name": "Německý svátek"
+      },
+      "holiday_sk": {
+        "name": "Slovenský svátek"
+      },
+      "name_day_sk": {
+        "name": "Slovenské meniny"
       }
     }
   }

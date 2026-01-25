@@ -58,6 +58,9 @@ from .const import (
     SENSOR_DAYS_UNTIL_EASTER,
     SENSOR_WORKDAYS_IN_MONTH,
     SENSOR_WORKDAYS_LEFT,
+    SENSOR_HOLIDAY_DE,
+    SENSOR_HOLIDAY_SK,
+    SENSOR_NAME_DAY_SK,
     FORMAT_DD_MM_YYYY_DOT,
     FORMAT_DD_MM_YYYY_DOT_SPACE,
     FORMAT_D_M_YYYY_DOT,
@@ -87,6 +90,9 @@ from .const import (
     ZODIAC_CS,
     ZODIAC_EN,
     ZODIAC_ICONS,
+    HOLIDAYS_DE,
+    HOLIDAYS_SK,
+    NAME_DAYS_SK,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -139,6 +145,9 @@ async def async_setup_entry(
         SENSOR_DAYS_UNTIL_EASTER: DatumDisplayDaysUntilEasterSensor,
         SENSOR_WORKDAYS_IN_MONTH: DatumDisplayWorkdaysInMonthSensor,
         SENSOR_WORKDAYS_LEFT: DatumDisplayWorkdaysLeftSensor,
+        SENSOR_HOLIDAY_DE: DatumDisplayHolidayDESensor,
+        SENSOR_HOLIDAY_SK: DatumDisplayHolidaySKSensor,
+        SENSOR_NAME_DAY_SK: DatumDisplayNameDaySKSensor,
     }
 
     for sensor_type in sensors_to_create:
@@ -1125,4 +1134,126 @@ class DatumDisplayWorkdaysLeftSensor(DatumDisplayBaseSensor):
             "month": now.month,
             "year": now.year,
             "current_day": now.day,
+        }
+
+
+class DatumDisplayHolidayDESensor(DatumDisplayBaseSensor):
+    """Sensor for displaying German holidays."""
+
+    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(
+            entry_id,
+            language,
+            date_format,
+            SENSOR_HOLIDAY_DE,
+            "Německý svátek" if language == LANGUAGE_CS else "German Holiday",
+            "mdi:party-popper",
+        )
+
+    async def async_update(self) -> None:
+        """Update the sensor."""
+        now = self._get_now()
+        key = (now.month, now.day)
+        holiday = HOLIDAYS_DE.get(key)
+        if holiday:
+            self._attr_native_value = holiday
+            self._attr_icon = "mdi:party-popper"
+        else:
+            self._attr_native_value = "Kein Feiertag" if self._language != LANGUAGE_CS else "Není svátek"
+            self._attr_icon = "mdi:calendar-blank"
+
+        # Add upcoming holidays as attributes
+        upcoming = []
+        for i in range(1, 31):
+            future = now + timedelta(days=i)
+            future_key = (future.month, future.day)
+            if future_key in HOLIDAYS_DE:
+                upcoming.append({
+                    "date": f"{future.day}.{future.month}.",
+                    "name": HOLIDAYS_DE[future_key],
+                    "days_until": i,
+                })
+                if len(upcoming) >= 3:
+                    break
+        self._attr_extra_state_attributes = {
+            "is_holiday": holiday is not None,
+            "upcoming_holidays": upcoming,
+        }
+
+
+class DatumDisplayHolidaySKSensor(DatumDisplayBaseSensor):
+    """Sensor for displaying Slovak holidays."""
+
+    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(
+            entry_id,
+            language,
+            date_format,
+            SENSOR_HOLIDAY_SK,
+            "Slovenský svátek" if language == LANGUAGE_CS else "Slovak Holiday",
+            "mdi:party-popper",
+        )
+
+    async def async_update(self) -> None:
+        """Update the sensor."""
+        now = self._get_now()
+        key = (now.month, now.day)
+        holiday = HOLIDAYS_SK.get(key)
+        if holiday:
+            self._attr_native_value = holiday
+            self._attr_icon = "mdi:party-popper"
+        else:
+            self._attr_native_value = "Nie je sviatok" if self._language != LANGUAGE_CS else "Není svátek"
+            self._attr_icon = "mdi:calendar-blank"
+
+        # Add upcoming holidays as attributes
+        upcoming = []
+        for i in range(1, 31):
+            future = now + timedelta(days=i)
+            future_key = (future.month, future.day)
+            if future_key in HOLIDAYS_SK:
+                upcoming.append({
+                    "date": f"{future.day}.{future.month}.",
+                    "name": HOLIDAYS_SK[future_key],
+                    "days_until": i,
+                })
+                if len(upcoming) >= 3:
+                    break
+        self._attr_extra_state_attributes = {
+            "is_holiday": holiday is not None,
+            "upcoming_holidays": upcoming,
+        }
+
+
+class DatumDisplayNameDaySKSensor(DatumDisplayBaseSensor):
+    """Sensor for displaying Slovak name day (meniny)."""
+
+    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(
+            entry_id,
+            language,
+            date_format,
+            SENSOR_NAME_DAY_SK,
+            "Slovenské meniny" if language == LANGUAGE_CS else "Slovak Name Day",
+            "mdi:cake-variant",
+        )
+
+    async def async_update(self) -> None:
+        """Update the sensor."""
+        now = self._get_now()
+        key = (now.month, now.day)
+        name = NAME_DAYS_SK.get(key, "")
+        self._attr_native_value = name
+
+        # Add tomorrow's name day
+        tomorrow = now + timedelta(days=1)
+        tomorrow_key = (tomorrow.month, tomorrow.day)
+        tomorrow_name = NAME_DAYS_SK.get(tomorrow_key, "")
+
+        self._attr_extra_state_attributes = {
+            "tomorrow": tomorrow_name,
+            "date": f"{now.day}.{now.month}.",
         }

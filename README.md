@@ -13,7 +13,7 @@ Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých 
 
 - **Více formátů data** - 15+ různých stylů zobrazení
 - **České a anglické názvy** - plná lokalizace dnů a měsíců
-- **Více senzorů** (28 celkem):
+- **Více senzorů** (31 celkem):
   - Datum (různé formáty)
   - Den v týdnu
   - Týden v roce
@@ -22,8 +22,8 @@ Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých 
   - Počet dnů v měsíci/roce
   - Přestupný rok
   - Čtvrtletí
-  - **Svátky** (české státní svátky)
-  - **Jmeniny** (kompletní český kalendář)
+  - **Svátky** (české, německé, slovenské státní svátky)
+  - **Jmeniny** (české i slovenské meniny)
   - **Pracovní den** (Ano/Ne)
   - **Fáze měsíce** (nov, úplněk, čtvrtě...)
   - **Roční období** (jaro, léto, podzim, zima)
@@ -151,6 +151,18 @@ Celkový počet pracovních dnů v aktuálním měsíci.
 
 ### sensor.datum_display_workdays_left
 Počet zbývajících pracovních dnů do konce měsíce.
+
+### sensor.datum_display_holiday_de
+Německé státní svátky (Neujahr, Tag der Deutschen Einheit...).
+- Atributy: `is_holiday`, `upcoming_holidays`
+
+### sensor.datum_display_holiday_sk
+Slovenské štátne sviatky (Deň vzniku SR, Sviatok práce...).
+- Atributy: `is_holiday`, `upcoming_holidays`
+
+### sensor.datum_display_name_day_sk
+Slovenské meniny (366 dní).
+- Atributy: `tomorrow` (meniny zajtra)
 
 ## Příklad použití v Lovelace
 
