@@ -5,7 +5,8 @@
 
 Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých a anglických názvů dnů a měsíců.
 
-<img width="334" height="498" alt="image" src="https://github.com/user-attachments/assets/803afc61-4e9a-4f88-ac77-8d9b4cafc1da" />
+<img width="334" height="498" alt="image" src="https://github.com/user-attachments/assets/803afc61-4e9a-4f88-ac77-8d9b4cafc1da" /> <img width="584" height="558" alt="image" src="https://github.com/user-attachments/assets/283754c8-c6f5-457f-96e4-042c73df69e0" />
+
 
 
 ## Funkce
