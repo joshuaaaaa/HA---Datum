@@ -125,6 +125,9 @@
       },
       "name_day_sk": {
         "name": "Slovak Name Day"
+      },
+      "name_day_de": {
+        "name": "German Name Day"
       }
     }
   }

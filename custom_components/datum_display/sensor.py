@@ -61,6 +61,7 @@ from .const import (
     SENSOR_HOLIDAY_DE,
     SENSOR_HOLIDAY_SK,
     SENSOR_NAME_DAY_SK,
+    SENSOR_NAME_DAY_DE,
     FORMAT_DD_MM_YYYY_DOT,
     FORMAT_DD_MM_YYYY_DOT_SPACE,
     FORMAT_D_M_YYYY_DOT,
@@ -93,6 +94,7 @@ from .const import (
     HOLIDAYS_DE,
     HOLIDAYS_SK,
     NAME_DAYS_SK,
+    NAME_DAYS_DE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -148,6 +150,7 @@ async def async_setup_entry(
         SENSOR_HOLIDAY_DE: DatumDisplayHolidayDESensor,
         SENSOR_HOLIDAY_SK: DatumDisplayHolidaySKSensor,
         SENSOR_NAME_DAY_SK: DatumDisplayNameDaySKSensor,
+        SENSOR_NAME_DAY_DE: DatumDisplayNameDayDESensor,
     }
 
     for sensor_type in sensors_to_create:
@@ -1252,6 +1255,38 @@ class DatumDisplayNameDaySKSensor(DatumDisplayBaseSensor):
         tomorrow = now + timedelta(days=1)
         tomorrow_key = (tomorrow.month, tomorrow.day)
         tomorrow_name = NAME_DAYS_SK.get(tomorrow_key, "")
+
+        self._attr_extra_state_attributes = {
+            "tomorrow": tomorrow_name,
+            "date": f"{now.day}.{now.month}.",
+        }
+
+
+class DatumDisplayNameDayDESensor(DatumDisplayBaseSensor):
+    """Sensor for displaying German name day (Namenstag)."""
+
+    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(
+            entry_id,
+            language,
+            date_format,
+            SENSOR_NAME_DAY_DE,
+            "Německé jmeniny" if language == LANGUAGE_CS else "German Name Day",
+            "mdi:cake-variant",
+        )
+
+    async def async_update(self) -> None:
+        """Update the sensor."""
+        now = self._get_now()
+        key = (now.month, now.day)
+        name = NAME_DAYS_DE.get(key, "")
+        self._attr_native_value = name
+
+        # Add tomorrow's name day
+        tomorrow = now + timedelta(days=1)
+        tomorrow_key = (tomorrow.month, tomorrow.day)
+        tomorrow_name = NAME_DAYS_DE.get(tomorrow_key, "")
 
         self._attr_extra_state_attributes = {
             "tomorrow": tomorrow_name,
