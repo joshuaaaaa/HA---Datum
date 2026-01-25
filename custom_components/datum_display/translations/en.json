@@ -83,6 +83,39 @@
       },
       "week_end": {
         "name": "Week End"
+      },
+      "holiday": {
+        "name": "Holiday"
+      },
+      "name_day": {
+        "name": "Name Day"
+      },
+      "is_workday": {
+        "name": "Workday"
+      },
+      "moon_phase": {
+        "name": "Moon Phase"
+      },
+      "season": {
+        "name": "Season"
+      },
+      "zodiac": {
+        "name": "Zodiac Sign"
+      },
+      "days_until_christmas": {
+        "name": "Days Until Christmas"
+      },
+      "days_until_new_year": {
+        "name": "Days Until New Year"
+      },
+      "days_until_easter": {
+        "name": "Days Until Easter"
+      },
+      "workdays_in_month": {
+        "name": "Workdays in Month"
+      },
+      "workdays_left": {
+        "name": "Workdays Left"
       }
     }
   }

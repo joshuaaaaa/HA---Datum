@@ -9,7 +9,7 @@ Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých 
 
 - **Více formátů data** - 15+ různých stylů zobrazení
 - **České a anglické názvy** - plná lokalizace dnů a měsíců
-- **Více senzorů**:
+- **Více senzorů** (28 celkem):
   - Datum (různé formáty)
   - Den v týdnu
   - Týden v roce
@@ -18,6 +18,14 @@ Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých 
   - Počet dnů v měsíci/roce
   - Přestupný rok
   - Čtvrtletí
+  - **Svátky** (české státní svátky)
+  - **Jmeniny** (kompletní český kalendář)
+  - **Pracovní den** (Ano/Ne)
+  - **Fáze měsíce** (nov, úplněk, čtvrtě...)
+  - **Roční období** (jaro, léto, podzim, zima)
+  - **Znamení zvěrokruhu**
+  - **Odpočty** (do Vánoc, Nového roku, Velikonoc)
+  - **Pracovní dny** (v měsíci, zbývající)
 - **Konfigurace přes UI** - žádné YAML úpravy
 
 ## Instalace přes HACS
@@ -97,6 +105,49 @@ Počet dnů do konce roku.
 ### sensor.datum_display_week_dates
 Všechna data aktuálního týdne.
 
+### sensor.datum_display_holiday
+Aktuální státní svátek (pokud je).
+- Atributy: `is_holiday`, `upcoming_holidays`
+
+### sensor.datum_display_name_day
+Kdo má dnes svátek (české jmeniny).
+- Atributy: `tomorrow` (jmeniny zítra)
+
+### sensor.datum_display_is_workday
+Je dnes pracovní den? (Ano/Ne).
+- Atributy: `is_workday`, `is_weekend`, `is_holiday`
+
+### sensor.datum_display_moon_phase
+Aktuální fáze měsíce (Nov, Úplněk, První čtvrť...).
+- Ikona se dynamicky mění podle fáze
+- Atributy: `phase_id`, `illumination`
+
+### sensor.datum_display_season
+Aktuální roční období (Jaro, Léto, Podzim, Zima).
+- Ikona se dynamicky mění podle období
+- Atributy: `season_id`
+
+### sensor.datum_display_zodiac
+Aktuální znamení zvěrokruhu.
+- Ikona odpovídá znamení
+- Atributy: `zodiac_id`
+
+### sensor.datum_display_days_until_christmas
+Počet dnů do Štědrého dne (24.12.).
+
+### sensor.datum_display_days_until_new_year
+Počet dnů do Nového roku.
+
+### sensor.datum_display_days_until_easter
+Počet dnů do Velikonoc (automatický výpočet data).
+- Atributy: `easter_date`, `easter_year`
+
+### sensor.datum_display_workdays_in_month
+Celkový počet pracovních dnů v aktuálním měsíci.
+
+### sensor.datum_display_workdays_left
+Počet zbývajících pracovních dnů do konce měsíce.
+
 ## Příklad použití v Lovelace
 
 ```yaml
@@ -122,6 +173,54 @@ content: |
   <div style="font-family: 'Roboto', sans-serif; font-size: 1.2em; text-align: center; color: gray;">
     {{ states('sensor.datum_display_day_name') }}
   </div>
+```
+
+### Kompletní přehled s novými senzory
+
+```yaml
+type: entities
+title: Datum a čas
+entities:
+  - entity: sensor.datum_display_date
+    name: Datum
+  - entity: sensor.datum_display_day_name
+    name: Den
+  - entity: sensor.datum_display_name_day
+    name: Svátek má
+  - entity: sensor.datum_display_moon_phase
+    name: Měsíc
+  - entity: sensor.datum_display_zodiac
+    name: Znamení
+  - entity: sensor.datum_display_season
+    name: Období
+```
+
+### Odpočty do svátků
+
+```yaml
+type: glance
+title: Odpočty
+entities:
+  - entity: sensor.datum_display_days_until_christmas
+    name: Vánoce
+  - entity: sensor.datum_display_days_until_new_year
+    name: Nový rok
+  - entity: sensor.datum_display_days_until_easter
+    name: Velikonoce
+```
+
+### Pracovní dny
+
+```yaml
+type: entities
+title: Práce
+entities:
+  - entity: sensor.datum_display_is_workday
+    name: Dnes je pracovní den
+  - entity: sensor.datum_display_workdays_in_month
+    name: Pracovních dnů v měsíci
+  - entity: sensor.datum_display_workdays_left
+    name: Zbývá pracovních dnů
 ```
 
 ## Změna fontu

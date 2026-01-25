@@ -83,6 +83,39 @@
       },
       "week_end": {
         "name": "Konec týdne"
+      },
+      "holiday": {
+        "name": "Svátek"
+      },
+      "name_day": {
+        "name": "Jmeniny"
+      },
+      "is_workday": {
+        "name": "Pracovní den"
+      },
+      "moon_phase": {
+        "name": "Fáze měsíce"
+      },
+      "season": {
+        "name": "Roční období"
+      },
+      "zodiac": {
+        "name": "Znamení zvěrokruhu"
+      },
+      "days_until_christmas": {
+        "name": "Dnů do Vánoc"
+      },
+      "days_until_new_year": {
+        "name": "Dnů do Nového roku"
+      },
+      "days_until_easter": {
+        "name": "Dnů do Velikonoc"
+      },
+      "workdays_in_month": {
+        "name": "Pracovních dnů v měsíci"
+      },
+      "workdays_left": {
+        "name": "Zbývá pracovních dnů"
       }
     }
   }
