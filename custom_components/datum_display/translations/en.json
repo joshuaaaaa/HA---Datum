@@ -1,0 +1,89 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Datum Display",
+        "description": "Set up date display with support for localized day and month names.",
+        "data": {
+          "language": "Language",
+          "date_format": "Date format",
+          "sensors": "Sensors to create"
+        }
+      }
+    },
+    "error": {
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Integration is already configured for this language"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Datum Display Settings",
+        "description": "Modify the date display settings.",
+        "data": {
+          "language": "Language",
+          "date_format": "Date format",
+          "sensors": "Sensors"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "date": {
+        "name": "Date"
+      },
+      "day_name": {
+        "name": "Day"
+      },
+      "day_name_short": {
+        "name": "Day (short)"
+      },
+      "week_number": {
+        "name": "Week"
+      },
+      "month_name": {
+        "name": "Month"
+      },
+      "month_number": {
+        "name": "Month Number"
+      },
+      "year": {
+        "name": "Year"
+      },
+      "day_of_year": {
+        "name": "Day of Year"
+      },
+      "days_in_month": {
+        "name": "Days in Month"
+      },
+      "is_leap_year": {
+        "name": "Leap Year"
+      },
+      "quarter": {
+        "name": "Quarter"
+      },
+      "days_until_end_of_year": {
+        "name": "Days Until Year End"
+      },
+      "week_dates": {
+        "name": "Week Dates"
+      },
+      "tomorrow": {
+        "name": "Tomorrow"
+      },
+      "yesterday": {
+        "name": "Yesterday"
+      },
+      "week_start": {
+        "name": "Week Start"
+      },
+      "week_end": {
+        "name": "Week End"
+      }
+    }
+  }
+}

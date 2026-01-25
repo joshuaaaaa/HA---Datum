@@ -1,0 +1,89 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Datum Display",
+        "description": "Nastavte zobrazení data s podporou českých názvů dnů a měsíců.",
+        "data": {
+          "language": "Jazyk",
+          "date_format": "Formát data",
+          "sensors": "Senzory k vytvoření"
+        }
+      }
+    },
+    "error": {
+      "unknown": "Neočekávaná chyba"
+    },
+    "abort": {
+      "already_configured": "Integrace je již nakonfigurována pro tento jazyk"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Nastavení Datum Display",
+        "description": "Upravte nastavení zobrazení data.",
+        "data": {
+          "language": "Jazyk",
+          "date_format": "Formát data",
+          "sensors": "Senzory"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "date": {
+        "name": "Datum"
+      },
+      "day_name": {
+        "name": "Den"
+      },
+      "day_name_short": {
+        "name": "Den (zkr.)"
+      },
+      "week_number": {
+        "name": "Týden"
+      },
+      "month_name": {
+        "name": "Měsíc"
+      },
+      "month_number": {
+        "name": "Číslo měsíce"
+      },
+      "year": {
+        "name": "Rok"
+      },
+      "day_of_year": {
+        "name": "Den v roce"
+      },
+      "days_in_month": {
+        "name": "Dnů v měsíci"
+      },
+      "is_leap_year": {
+        "name": "Přestupný rok"
+      },
+      "quarter": {
+        "name": "Čtvrtletí"
+      },
+      "days_until_end_of_year": {
+        "name": "Dnů do konce roku"
+      },
+      "week_dates": {
+        "name": "Data týdne"
+      },
+      "tomorrow": {
+        "name": "Zítra"
+      },
+      "yesterday": {
+        "name": "Včera"
+      },
+      "week_start": {
+        "name": "Začátek týdne"
+      },
+      "week_end": {
+        "name": "Konec týdne"
+      }
+    }
+  }
+}

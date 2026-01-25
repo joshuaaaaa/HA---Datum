@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Datum Display",
+        "description": "Set up date display with support for localized day and month names.",
+        "data": {
+          "language": "Language",
+          "date_format": "Date format",
+          "sensors": "Sensors to create"
+        }
+      }
+    },
+    "error": {
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Integration is already configured for this language"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Datum Display Settings",
+        "description": "Modify the date display settings.",
+        "data": {
+          "language": "Language",
+          "date_format": "Date format",
+          "sensors": "Sensors"
+        }
+      }
+    }
+  }
+}
