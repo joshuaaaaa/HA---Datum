@@ -5,6 +5,9 @@
 
 Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých a anglických názvů dnů a měsíců.
 
+<img width="334" height="498" alt="image" src="https://github.com/user-attachments/assets/803afc61-4e9a-4f88-ac77-8d9b4cafc1da" />
+
+
 ## Funkce
 
 - **Více formátů data** - 15+ různých stylů zobrazení
