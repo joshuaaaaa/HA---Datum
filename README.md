@@ -13,7 +13,7 @@ Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých 
 
 - **Více formátů data** - 15+ různých stylů zobrazení
 - **České a anglické názvy** - plná lokalizace dnů a měsíců
-- **Více senzorů** (32 celkem):
+- **Více senzorů** (34 celkem):
   - Datum (různé formáty)
   - Den v týdnu
   - Týden v roce
@@ -30,6 +30,8 @@ Pokročilá integrace pro zobrazení data v Home Assistant s podporou českých 
   - **Znamení zvěrokruhu**
   - **Odpočty** (do Vánoc, Nového roku, Velikonoc)
   - **Pracovní dny** (v měsíci, zbývající)
+  - **Sudý/Lichý týden**
+  - **Letní/Zimní čas** (DST detekce)
 - **Konfigurace přes UI** - žádné YAML úpravy
 
 ## Instalace přes HACS
@@ -167,6 +169,15 @@ Slovenské meniny (366 dní).
 ### sensor.datum_display_name_day_de
 Německé Namenstage (366 dní).
 - Atributy: `tomorrow` (Namenstag morgen)
+
+### sensor.datum_display_week_parity
+Sudý nebo lichý týden (Sudý/Lichý / Even/Odd).
+- Atributy: `week_number`, `is_even`
+
+### sensor.datum_display_dst
+Letní nebo zimní čas (detekce DST).
+- Ikona se dynamicky mění (slunce/sníh)
+- Atributy: `is_dst`, `utc_offset`
 
 ## Příklad použití v Lovelace
 
