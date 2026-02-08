@@ -83,6 +83,8 @@ SENSOR_HOLIDAY_DE: Final = "holiday_de"
 SENSOR_HOLIDAY_SK: Final = "holiday_sk"
 SENSOR_NAME_DAY_SK: Final = "name_day_sk"
 SENSOR_NAME_DAY_DE: Final = "name_day_de"
+SENSOR_WEEK_PARITY: Final = "week_parity"
+SENSOR_DST: Final = "dst"
 
 SENSOR_TYPES: Final = {
     SENSOR_DATE: "Datum",
@@ -117,6 +119,8 @@ SENSOR_TYPES: Final = {
     SENSOR_HOLIDAY_SK: "Slovenský svátek",
     SENSOR_NAME_DAY_SK: "Slovenské meniny",
     SENSOR_NAME_DAY_DE: "Německé jmeniny",
+    SENSOR_WEEK_PARITY: "Sudý/Lichý týden",
+    SENSOR_DST: "Letní/Zimní čas",
 }
 
 # Czech day names
