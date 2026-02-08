@@ -18,6 +18,16 @@
       "already_configured": "Integration is already configured for this language"
     }
   },
+  "entity": {
+    "sensor": {
+      "week_parity": {
+        "name": "Even/Odd Week"
+      },
+      "dst": {
+        "name": "Summer/Winter Time"
+      }
+    }
+  },
   "options": {
     "step": {
       "init": {

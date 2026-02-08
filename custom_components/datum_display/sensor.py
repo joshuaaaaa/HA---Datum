@@ -62,6 +62,8 @@ from .const import (
     SENSOR_HOLIDAY_SK,
     SENSOR_NAME_DAY_SK,
     SENSOR_NAME_DAY_DE,
+    SENSOR_WEEK_PARITY,
+    SENSOR_DST,
     FORMAT_DD_MM_YYYY_DOT,
     FORMAT_DD_MM_YYYY_DOT_SPACE,
     FORMAT_D_M_YYYY_DOT,
@@ -151,6 +153,8 @@ async def async_setup_entry(
         SENSOR_HOLIDAY_SK: DatumDisplayHolidaySKSensor,
         SENSOR_NAME_DAY_SK: DatumDisplayNameDaySKSensor,
         SENSOR_NAME_DAY_DE: DatumDisplayNameDayDESensor,
+        SENSOR_WEEK_PARITY: DatumDisplayWeekParitySensor,
+        SENSOR_DST: DatumDisplayDSTSensor,
     }
 
     for sensor_type in sensors_to_create:
@@ -1291,4 +1295,67 @@ class DatumDisplayNameDayDESensor(DatumDisplayBaseSensor):
         self._attr_extra_state_attributes = {
             "tomorrow": tomorrow_name,
             "date": f"{now.day}.{now.month}.",
+        }
+
+
+class DatumDisplayWeekParitySensor(DatumDisplayBaseSensor):
+    """Sensor for displaying even/odd week."""
+
+    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(
+            entry_id,
+            language,
+            date_format,
+            SENSOR_WEEK_PARITY,
+            "Sudý/Lichý týden" if language == LANGUAGE_CS else "Even/Odd Week",
+            "mdi:calendar-week",
+        )
+
+    async def async_update(self) -> None:
+        """Update the sensor."""
+        now = self._get_now()
+        week_number = now.isocalendar()[1]
+        is_even = week_number % 2 == 0
+
+        if self._language == LANGUAGE_CS:
+            self._attr_native_value = "Sudý" if is_even else "Lichý"
+        else:
+            self._attr_native_value = "Even" if is_even else "Odd"
+
+        self._attr_extra_state_attributes = {
+            "week_number": week_number,
+            "is_even": is_even,
+        }
+
+
+class DatumDisplayDSTSensor(DatumDisplayBaseSensor):
+    """Sensor for displaying summer/winter time (DST)."""
+
+    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(
+            entry_id,
+            language,
+            date_format,
+            SENSOR_DST,
+            "Letní/Zimní čas" if language == LANGUAGE_CS else "Summer/Winter Time",
+            "mdi:clock-check",
+        )
+
+    async def async_update(self) -> None:
+        """Update the sensor."""
+        now = self._get_now()
+        is_dst = bool(now.dst())
+
+        if self._language == LANGUAGE_CS:
+            self._attr_native_value = "Letní čas" if is_dst else "Zimní čas"
+        else:
+            self._attr_native_value = "Summer Time" if is_dst else "Winter Time"
+
+        self._attr_icon = "mdi:white-balance-sunny" if is_dst else "mdi:snowflake"
+
+        self._attr_extra_state_attributes = {
+            "is_dst": is_dst,
+            "utc_offset": str(now.utcoffset()),
         }
