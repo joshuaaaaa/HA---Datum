@@ -130,7 +130,6 @@ async def async_setup_entry(
         SENSOR_YEAR: DatumDisplayYearSensor,
         SENSOR_DAY_OF_YEAR: DatumDisplayDayOfYearSensor,
         SENSOR_DAYS_IN_MONTH: DatumDisplayDaysInMonthSensor,
-        SENSOR_IS_LEAP_YEAR: DatumDisplayIsLeapYearSensor,
         SENSOR_QUARTER: DatumDisplayQuarterSensor,
         SENSOR_DAYS_UNTIL_END_OF_YEAR: DatumDisplayDaysUntilEndOfYearSensor,
         SENSOR_WEEK_DATES: DatumDisplayWeekDatesSensor,
@@ -140,7 +139,6 @@ async def async_setup_entry(
         SENSOR_WEEK_END: DatumDisplayWeekEndSensor,
         SENSOR_HOLIDAY: DatumDisplayHolidaySensor,
         SENSOR_NAME_DAY: DatumDisplayNameDaySensor,
-        SENSOR_IS_WORKDAY: DatumDisplayIsWorkdaySensor,
         SENSOR_MOON_PHASE: DatumDisplayMoonPhaseSensor,
         SENSOR_SEASON: DatumDisplaySeasonSensor,
         SENSOR_ZODIAC: DatumDisplayZodiacSensor,
@@ -483,31 +481,6 @@ class DatumDisplayDaysInMonthSensor(DatumDisplayBaseSensor):
         now = self._get_now()
         self._attr_native_value = calendar.monthrange(now.year, now.month)[1]
 
-
-class DatumDisplayIsLeapYearSensor(DatumDisplayBaseSensor):
-    """Sensor for displaying if current year is a leap year."""
-
-    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
-        """Initialize the sensor."""
-        super().__init__(
-            entry_id,
-            language,
-            date_format,
-            SENSOR_IS_LEAP_YEAR,
-            "Přestupný rok" if language == LANGUAGE_CS else "Leap Year",
-            "mdi:calendar-star",
-        )
-
-    async def async_update(self) -> None:
-        """Update the sensor."""
-        now = self._get_now()
-        is_leap = calendar.isleap(now.year)
-        if self._language == LANGUAGE_CS:
-            self._attr_native_value = "Ano" if is_leap else "Ne"
-        else:
-            self._attr_native_value = "Yes" if is_leap else "No"
-
-
 class DatumDisplayQuarterSensor(DatumDisplayBaseSensor):
     """Sensor for displaying quarter."""
 
@@ -753,46 +726,6 @@ class DatumDisplayNameDaySensor(DatumDisplayBaseSensor):
             "date": f"{now.day}.{now.month}.",
         }
 
-
-class DatumDisplayIsWorkdaySensor(DatumDisplayBaseSensor):
-    """Sensor for displaying if today is a workday."""
-
-    def __init__(self, entry_id: str, language: str, date_format: str) -> None:
-        """Initialize the sensor."""
-        super().__init__(
-            entry_id,
-            language,
-            date_format,
-            SENSOR_IS_WORKDAY,
-            "Pracovní den" if language == LANGUAGE_CS else "Workday",
-            "mdi:briefcase",
-        )
-
-    async def async_update(self) -> None:
-        """Update the sensor."""
-        now = self._get_now()
-        weekday = now.weekday()
-        key = (now.month, now.day)
-
-        # Check if weekend
-        is_weekend = weekday >= 5
-        # Check if holiday
-        is_holiday = key in HOLIDAYS_CS
-
-        is_workday = not is_weekend and not is_holiday
-
-        if self._language == LANGUAGE_CS:
-            self._attr_native_value = "Ano" if is_workday else "Ne"
-        else:
-            self._attr_native_value = "Yes" if is_workday else "No"
-
-        self._attr_icon = "mdi:briefcase" if is_workday else "mdi:home"
-
-        self._attr_extra_state_attributes = {
-            "is_workday": is_workday,
-            "is_weekend": is_weekend,
-            "is_holiday": is_holiday,
-        }
 
 
 class DatumDisplayMoonPhaseSensor(DatumDisplayBaseSensor):
